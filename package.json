@@ -1,0 +1,26 @@
+{
+  "name": "bamazon",
+  "version": "1.0.0",
+  "description": "An Amazon-like storefront app",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xmkchen/bamazon.git"
+  },
+  "keywords": [
+    "bamazon"
+  ],
+  "author": "kathy chen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xmkchen/bamazon/issues"
+  },
+  "homepage": "https://github.com/xmkchen/bamazon#readme",
+  "dependencies": {
+    "inquirer": "^6.2.2",
+    "mysql": "^2.16.0"
+  }
+}
