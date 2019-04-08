@@ -8,30 +8,30 @@ USE bamazonDB;
 --   item_id INTEGER NOT NULL AUTO_INCREMENT,
 --   product_name VARCHAR(255) NOT NULL,
 --   department_name VARCHAR(255) NOT NULL,
---   price DOUBLE(10,2) NOT NULL,
+--   price DOUBLE(8,2) NOT NULL,
 --   stock_quantity INTEGER NOT NULL,
 --   PRIMARY KEY (item_id)
 -- );
 
 -- INSERT INTO products(product_name, department_name, price, stock_quantity)
--- VALUES ("shoes", "footwear", 120, 10);
+-- VALUES ("Dress", "Clothing", 99.00, 30);
 -- INSERT INTO products(product_name, department_name, price, stock_quantity)
--- VALUES ("socks", "footwear", 10, 10);
+-- VALUES ("Singlet", "Clothing", 20.00, 50);
 -- INSERT INTO products(product_name, department_name, price, stock_quantity)
--- VALUES ("dresses", "clothing", 100, 30);
+-- VALUES ("Denim Jean", "Clothing", 100.00, 20);
 -- INSERT INTO products(product_name, department_name, price, stock_quantity)
--- VALUES ("singlets", "clothing", 20, 50);
+-- VALUES ("Leather Jacket", "Clothing", 120.00, 10);
 -- INSERT INTO products(product_name, department_name, price, stock_quantity)
--- VALUES ("jeans", "clothing", 100, 20);
+-- VALUES ("Beanie", "Accessories", 19.99, 7);
 -- INSERT INTO products(product_name, department_name, price, stock_quantity)
--- VALUES ("hat", "accessories", 10, 10);
+-- VALUES ("Handbag", "Accessories", 79.99, 10);
 -- INSERT INTO products(product_name, department_name, price, stock_quantity)
--- VALUES ("beanie", "accessories", 20, 7);
+-- VALUES ("Perfume", "Fragrance", 70.00, 10);
 -- INSERT INTO products(product_name, department_name, price, stock_quantity)
--- VALUES ("perfume", "toiletries", 70, 10);
+-- VALUES ("Red Lipstick", "Cosmetic", 49.50, 5);
 -- INSERT INTO products(product_name, department_name, price, stock_quantity)
--- VALUES ("lipstick", "comestics", 50, 5);
+-- VALUES ("Necklace", "Jewellery", 50.00, 5);
 -- INSERT INTO products(product_name, department_name, price, stock_quantity)
--- VALUES ("necklace", "jewellery", 50, 5);
+-- VALUES ("Shoe", "Footwear", 120.99, 10);
 
 -- SELECT * FROM products;

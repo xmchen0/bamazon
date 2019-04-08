@@ -57,13 +57,10 @@ connection.connect(function (err) {
 // Greeting
 function greeting() {
     console.log(" ");
-    console.log(" ++++++++++++++++++++++++++++++++++++++++++++ ");
     console.log(" ");
-    console.log(chalk.bgMagenta.white.bold("                 W E L C O M E               "));
+    console.log(chalk.bgMagenta.white.bold("                                    W E L C O M E                                   "));
     console.log(" ");
-    console.log(chalk.magenta("          Kathy's Boutique Women Store           "));
-    console.log(" ");
-    console.log(" ++++++++++++++++++++++++++++++++++++++++++++ ");
+    console.log(chalk.magenta("                               Kathy's Boutique Shop                           "));
     console.log(" ");
     // Initiate
     runSearch();
@@ -71,6 +68,7 @@ function greeting() {
 
 // View product catalog
 function runSearch() {
+    // Setup query
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
         // Display catalog
@@ -88,10 +86,10 @@ function customerOrder(inventory) {
             {
                 name: "choice",
                 type: "input",
-                message: "Like what you see? Type item id number of desired product:",
+                message: "Like what you see? \nType item id number of desired product:",
                 validate: function (val) {
+                    // Return value non-zero
                     return !isNaN(val);
-                    // ** how to validate user can only input one selection **
                 }
             }
         ])
@@ -105,16 +103,16 @@ function customerOrder(inventory) {
                 runSearch();
                 // Make another selection
                 console.log(" ");
-                console.log(" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                 console.log(" ");
                 console.log(" ");
                 console.log(" ");
-                console.log("    We apologise your selection is currently Unavailable.    ");
-                console.log("               Please make another selection.                ");
+                console.log("   We apologise your selection is currently Unavailable.   ");
+                console.log("              Please make another selection.               ");
                 console.log(" ");
                 console.log(" ");
                 console.log(" ");
-                console.log(" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                 console.log(" ");
             }
             // Otherwise if product is there
@@ -145,7 +143,7 @@ function quantityChoice(product) {
                 type: "input",
                 message: "Quantity:",
                 validate: function (val) {
-                    // Return value non-zero
+                    // Return value exceed zero
                     return val > 0;
                 }
             }
@@ -158,23 +156,71 @@ function quantityChoice(product) {
                 runSearch();
                 // Make another selection
                 console.log(" ");
-                console.log(" ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                 console.log(" ");
                 console.log(" ");
                 console.log(" ");
-                console.log("    We apologise your selection currently Exceeds Stock Limit.    ");
-                console.log("                    Please make another selection.                ");
+                console.log("   We apologise your selection currently Exceeds Stock Limit.   ");
+                console.log("                  Please make another selection.                ");
                 console.log(" ");
                 console.log(" ");
                 console.log(" ");
-                console.log(" ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                 console.log(" ");
             }
             // Otherwise if quantity is less than or equal value to stock inventory
             else {
                 // Pass parameter results to customerReceipt
-                // customerReceipt(product, quantity);
+                customerReceipt(product, quantity);
             }
         });
 }
 
+// Customer's Receipt
+function customerReceipt(product, quantity) {
+    connection.query(
+        // Deplete stock quantity in DB
+        "UPDATE products SET stock_quantity = stock_quantity - ? WHERE item_id = ?",
+        [quantity, product.item_id],
+        // Customer receipt information
+        function (err, res) {
+            console.log(" ");
+            console.log("===================================================================");
+            console.log(" ");
+            console.log("                       SALES INVOICE/RECEIPT                       ");
+            console.log(" ");
+            console.log("Purchase summary: ");
+            console.log(quantity + " x " + product.product_name);
+            console.log(" ");
+            console.log("TOTAL DUE: CAD $" + product.price * quantity);
+            console.log(" ");
+            console.log("                                                Served by: Kathy   ");
+            console.log(" ");
+            console.log("            Thank you for shopping with us! See you again.         ");
+            console.log(" ");
+            console.log("===================================================================");
+            console.log(" ");
+            // Initiate
+            browseAgain();
+        }
+    );
+}
+
+// Browse again or exit
+function browseAgain() {
+    inquirer
+        .prompt([
+            {
+                name: "userInput",
+                type: "confirm",
+                message: "Browse catalog again?",
+            }
+        ])
+        .then(function (response) {
+            if (response.userInput) {
+                runSearch();
+            } else {
+                process.exit();
+            };
+        });
+}
