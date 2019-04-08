@@ -4,10 +4,11 @@
 |             Bamazon           |
 \* --------------------------- */
 
-/*
+/*******************************************************************************************************************************************
 *->> Purpose: Build an Amazon-like store with MySQL and Node.
     (*) Minimum requirement: The app will take orders from customers and deplete stock from the store's inventory.
-    ( ) Bonus: The app can track product sales across your store's departments and then provide a summary of the highest-grossing departments in the store.
+    ( ) Bonus: The app can track product sales across your store's departments and then provide a summary of the 
+    highest-grossing departments in the store.
 
 *->> Roadmap: 
     [1] After installing npm mysql and inqurier, import both dependencies via require()
@@ -26,7 +27,7 @@
     [10] Customer's Receipt: Finalise purchase order
     [11] Deplete stock quantity from store's inventory 
     [12] Complete process
-*/
+*******************************************************************************************************************************************/
 
 // Require to npm install mysql + inquirer + chalk
 var mysql = require("mysql");
@@ -50,40 +51,47 @@ var connection = mysql.createConnection({
 connection.connect(function (err) {
     if (err) throw err;
     // Initiate
-    runSearch();
+    greeting();
 });
+
+// Greeting
+function greeting() {
+    console.log(" ");
+    console.log(" ++++++++++++++++++++++++++++++++++++++++++++ ");
+    console.log(" ");
+    console.log(chalk.bgMagenta.white.bold("                 W E L C O M E               "));
+    console.log(" ");
+    console.log(chalk.magenta("          Kathy's Boutique Women Store           "));
+    console.log(" ");
+    console.log(" ++++++++++++++++++++++++++++++++++++++++++++ ");
+    console.log(" ");
+    // Initiate
+    runSearch();
+};
 
 // View product catalog
 function runSearch() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
-        console.log(" ");
-        console.log(" ++++++++++++++++++++++++++++++++++++++++++++ ");
-        console.log(" ");
-        console.log(chalk.bgBlue.white.bold("                 W E L C O M E               "));
-        console.log(" ");
-        console.log("          Kathy's Boutique Women Store        ");
-        console.log(" ");
-        console.log(" ++++++++++++++++++++++++++++++++++++++++++++ ");
-        console.log(" ");
-        console.log(" Browse catalog here: ");
+        // Display catalog
         console.table(res);
         console.log(" ");
+        // Initiate
         customerOrder(res);
     });
 }
 
 // Customer's Order
-function customerOrder() {
+function customerOrder(inventory) {
     inquirer
         .prompt([
             {
                 name: "choice",
                 type: "input",
-                message: "Like what you see? Type in the item id number of desired product:",
+                message: "Like what you see? Type item id number of desired product:",
                 validate: function (val) {
                     return !isNaN(val);
-                    // how to validate user can only input one selection
+                    // ** how to validate user can only input one selection **
                 }
             }
         ])
@@ -91,33 +99,82 @@ function customerOrder() {
             console.log(val);
             var itemId = parseInt(val.choice);
             var product = checkInventory(itemId, inventory);
-            if (product) {
-                quantity(product);
-            }
-            else {
-                // make another selection if item id isn't in selection list
+            // If product is not there
+            if (!product) {
+                // Display catalog
+                runSearch();
+                // Make another selection
                 console.log(" ");
                 console.log(" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
                 console.log(" ");
                 console.log(" ");
                 console.log(" ");
-                console.log("    We apologise your selection is currently unavailable.    ");
+                console.log("    We apologise your selection is currently Unavailable.    ");
                 console.log("               Please make another selection.                ");
                 console.log(" ");
                 console.log(" ");
                 console.log(" ");
                 console.log(" +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
                 console.log(" ");
-                runSearch();
+            }
+            // Otherwise if product is there
+            else {
+                // Initiate
+                quantityChoice(product);
             }
         });
 }
 
+// Check inventory
 function checkInventory(choiceItem, inventory) {
     for (var i = 0; i < inventory.length; i++) {
         if (inventory[i].item_id === choiceItem) {
+            // Return customer choice from inventory
             return inventory[i];
         }
-    } 
+    }
 
 }
+
+// Quantity
+function quantityChoice(product) {
+    inquirer
+        .prompt([
+            {
+                name: "quantity",
+                type: "input",
+                message: "Quantity:",
+                validate: function (val) {
+                    // Return value non-zero
+                    return val > 0;
+                }
+            }
+        ])
+        .then(function (val) {
+            var quantity = parseInt(val.quantity);
+            // If quantity choice exceeds stock inventory
+            if (quantity > product.stock_quantity) {
+                // Display catalog
+                runSearch();
+                // Make another selection
+                console.log(" ");
+                console.log(" ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                console.log(" ");
+                console.log(" ");
+                console.log(" ");
+                console.log("    We apologise your selection currently Exceeds Stock Limit.    ");
+                console.log("                    Please make another selection.                ");
+                console.log(" ");
+                console.log(" ");
+                console.log(" ");
+                console.log(" ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ");
+                console.log(" ");
+            }
+            // Otherwise if quantity is less than or equal value to stock inventory
+            else {
+                // Pass parameter results to customerReceipt
+                // customerReceipt(product, quantity);
+            }
+        });
+}
+
