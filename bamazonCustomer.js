@@ -4,7 +4,8 @@
 |             Bamazon           |
 \* --------------------------- */
 
-/*******************************************************************************************************************************************
+/********************************************************************************************************************************************
+  
 *->> Purpose: Build an Amazon-like store with MySQL and Node.
     (*) Minimum requirement: The app will take orders from customers and deplete stock from the store's inventory.
     ( ) Bonus: The app can track product sales across your store's departments and then provide a summary of the 
@@ -27,12 +28,21 @@
     [10] Customer's Receipt: Finalise purchase order
     [11] Deplete stock quantity from store's inventory 
     [12] Complete process
+
 *******************************************************************************************************************************************/
 
+/* --------------------- *\
+|* VARIABLES | CONSTANTS *|
+\* --------------------- */
+
 // Require to npm install mysql + inquirer + chalk
-var mysql = require("mysql");
-var inquirer = require("inquirer");
-var chalk = require("chalk");
+const mysql = require("mysql");
+const inquirer = require("inquirer");
+const chalk = require("chalk");
+
+/* ---------------- *\
+|* MYSQL CONNECTION *|
+\* ---------------- */
 
 // Setup connection with mysql DB
 var connection = mysql.createConnection({
@@ -53,6 +63,10 @@ connection.connect(function (err) {
     // Initiate
     greeting();
 });
+
+/* --------- *\
+|* FUNCTIONS *|
+\* --------- */
 
 // Greeting
 function greeting() {
@@ -77,7 +91,7 @@ function runSearch() {
         // Initiate
         customerOrder(res);
     });
-}
+};
 
 // Customer's Order
 function customerOrder(inventory) {
@@ -121,7 +135,7 @@ function customerOrder(inventory) {
                 quantityChoice(product);
             }
         });
-}
+};
 
 // Check inventory
 function checkInventory(choiceItem, inventory) {
@@ -129,10 +143,9 @@ function checkInventory(choiceItem, inventory) {
         if (inventory[i].item_id === choiceItem) {
             // Return customer choice from inventory
             return inventory[i];
-        }
-    }
-
-}
+        };
+    };
+};
 
 // Quantity
 function quantityChoice(product) {
@@ -174,7 +187,7 @@ function quantityChoice(product) {
                 customerReceipt(product, quantity);
             }
         });
-}
+};
 
 // Customer's Receipt
 function customerReceipt(product, quantity) {
@@ -190,7 +203,9 @@ function customerReceipt(product, quantity) {
             console.log("                       SALES INVOICE/RECEIPT                       ");
             console.log(" ");
             console.log("Purchase summary: ");
-            console.log(quantity + " x " + product.product_name);
+            console.log(" ");
+            console.log("     " + quantity + " x " + product.product_name);
+            console.log(" ");
             console.log(" ");
             console.log("TOTAL DUE: CAD $" + product.price * quantity);
             console.log(" ");
@@ -204,7 +219,7 @@ function customerReceipt(product, quantity) {
             browseAgain();
         }
     );
-}
+};
 
 // Browse again or exit
 function browseAgain() {
@@ -221,6 +236,6 @@ function browseAgain() {
                 runSearch();
             } else {
                 process.exit();
-            };
+            }
         });
-}
+};
