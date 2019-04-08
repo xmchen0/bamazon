@@ -4,10 +4,10 @@
 |             Bamazon           |
 \* --------------------------- */
 
-/********************************************************************************************************************************************
+/****************************************************************************************************************************************
   
 *->> Purpose: Build an Amazon-like store with MySQL and Node.
-    (*) Minimum requirement: The app will take orders from customers and deplete stock from the store's inventory.
+    (*) bamazonCustomer.js (minimum requirement): The app will take orders from customers and deplete stock from the store's inventory.
     ( ) Bonus: The app can track product sales across your store's departments and then provide a summary of the 
     highest-grossing departments in the store.
 
@@ -22,14 +22,19 @@
     [6] Then check inventory: Is the selected item there? If not, console log not enough stock
     [7] Check inventory - might need to loop though the stock inventory to matchup with customer's order
 
-    [8] Quantity: Prompt customers to specify how many quantity they want to purchase
-    [9] If stock is sufficient, make purchase successfully. If not, console log not enough stock, input number again and display catalog
+    [8] Quantity: Prompt customer to specify how many quantity they want to purchase
+    [9] If stock is sufficient, make purchase successfully. If not, console log insufficient quantity, display catalog again and 
+    prompt user to input number again
 
     [10] Customer's Receipt: Finalise purchase order
     [11] Deplete stock quantity from store's inventory 
-    [12] Complete process
+    [12] Display purchase summary and total cost
 
-*******************************************************************************************************************************************/
+    [13] Prompt user to browse again or exit
+    [14] If browse again: display catalog via runSearch()
+    [15] If exit: quit program via process.exit()
+
+****************************************************************************************************************************************/
 
 /* --------------------- *\
 |* VARIABLES | CONSTANTS *|
