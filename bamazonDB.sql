@@ -32,6 +32,6 @@ USE bamazonDB;
 -- INSERT INTO products(product_name, department_name, price, stock_quantity)
 -- VALUES ("Necklace", "Jewellery", 50.00, 5);
 -- INSERT INTO products(product_name, department_name, price, stock_quantity)
--- VALUES ("Shoe", "Footwear", 120.99, 10);
+-- VALUES ("Shoes", "Footwear", 120.99, 10);
 
 -- SELECT * FROM products;

@@ -216,8 +216,6 @@ function customerReceipt(product, quantity) {
             console.log(" ");
             console.log("                                                Served by: Kathy   ");
             console.log(" ");
-            console.log("            Thank you for shopping with us! See you again.         ");
-            console.log(" ");
             console.log("===================================================================");
             console.log(" ");
             // Initiate
@@ -240,6 +238,8 @@ function browseAgain() {
             if (response.userInput) {
                 runSearch();
             } else {
+                console.log("Thank you for shopping with us! See you again.");
+                console.log(" ");
                 process.exit();
             }
         });
