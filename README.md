@@ -8,10 +8,8 @@ The app will take in orders from customers and deplete stock from the store's in
 
 ## Full Demo  ⬇️
 
-Coming Soon
-
-* Watch on YouTube
-* Length: 
+* Watch on YouTube: https://youtu.be/UCgMsh8bKmU
+* Length: 1:07
 * No audio
 
 ## Getting Started
