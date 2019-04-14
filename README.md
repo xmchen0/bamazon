@@ -16,8 +16,19 @@ Build an Amazon-like store with MySQL and Node.js.
 
 ## Full Demo  ⬇️
 
-* // Update Coming Soon 
-* Watch on old demo YouTube: https://youtu.be/UCgMsh8bKmU
+### bamazonCustomer.js
+https://youtu.be/OdQXpKfSzzA
+
+* Length: 0:51
+* No audio
+
+### bamazonManger.js
+https://youtu.be/80f-NdNUz2U
+
+* Length: 1:00
+* No audio
+
+* Watch old demo on YouTube: https://youtu.be/UCgMsh8bKmU
 * Length: 1:07
 * No audio
 
@@ -33,7 +44,7 @@ Download zip file or Git Clone repository will get you a copy of the project up 
 2. Inside your terminal enter `npm install` to install the dependencies in the local node_modules folder
 3. Ensure you have updated your MySQL credentials in bamazonCustomer.js and bamazonManager.js
 4. Then enter the following in the command line `node bamazonCustomer.js` or `node bamazonManager.js`
-5. Check out the video demos [insert video links]
+5. Check out the video demos under Full Demo ⬆️
 
 ### Document Organisation
     
@@ -74,6 +85,7 @@ Download zip file or Git Clone repository will get you a copy of the project up 
 * [Inquirer.js](https://www.npmjs.com/package/inquirer/) - Interactive prompting
 * [Cli-Table](https://www.npmjs.com/package/cli-table) - Render unicode-aided tables
 * [Chalk](https://www.npmjs.com/package/chalk/) - Terminal colour
+* [Visual Studio Code](https://code.visualstudio.com/) - Text editor
 
 
 ## Author
