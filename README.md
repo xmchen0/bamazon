@@ -28,7 +28,8 @@ https://youtu.be/80f-NdNUz2U
 * Length: 1:00
 * No audio
 
-* Watch old demo on YouTube: https://youtu.be/UCgMsh8bKmU
+
+Watch old demo on YouTube (initial upload): https://youtu.be/UCgMsh8bKmU
 * Length: 1:07
 * No audio
 
