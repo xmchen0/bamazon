@@ -21,7 +21,7 @@
     [5] Set up a switch case to select one of menu option code blocks to be executed
 
     [6] If a manager selects View Products for Sale, the app should list every available item: the item IDs, names, prices, and quantities
-    [7] If a manager selects View Low Inventory, then it should list all items with an inventory count lower than five
+    [7] If a manager selects View Low Inventory, then it should list all items with an inventory count lower than five (5)
     [8] If a manager selects Add to Inventory, the app should display a prompt that will let the manager "add more" of any item currently in the store
     [9] If a manager selects Add New Product, it should allow the manager to add a completely new product to the store
 
@@ -93,7 +93,7 @@ function runSearch() {
 function managerMenu() {
     inquirer.prompt([
         {
-            message: 'Manager Menu: Please make a selection: ',
+            message: 'Please make a selection: ',
             type: 'list',
             choices: [
                 'View Products For Sale',
@@ -105,7 +105,7 @@ function managerMenu() {
         }
     ])
         .then((options) => {
-            switch (options.action) {
+            switch (options.select) {
                 case 'View Products For Sale':
                     viewProducts();
                     break;
@@ -118,8 +118,77 @@ function managerMenu() {
                 case 'Add New Product':
                     addNewProduct();
                     break;
+                default: 'View All Products'
+                    runSearch();
+                    break;
             }
         });
-}
+};
 
+// List every available item
+function viewProducts() {
+    connection.query("SELECT * FROM products", function (err, res) {
+        if (err) throw err;
+        console.table(res);
+        // Select new action from menu
+        managerMenu();
+    })
+};
 
+// List all items with an inventory count lower than five (5)
+function viewInventory() {
+    connection.query("SELECT * FROM products WHERE stock_quantity < 5", function (err, res) {
+        if (err) throw err;
+        console.table(res);
+        // Select new action from menu
+        managerMenu();
+    })
+};
+
+// Display a prompt that will let the manager "add more" of any item currently in the store
+function addInventory() {
+    inquirer.prompt([
+        {
+            name: "item_id",
+            type: "input",
+            message: "Enter item id that you would like to add more stock to:"
+        },
+        {
+            name: "stock",
+            type: "input",
+            message: "Number of stock to add:"
+        }
+    ])
+        .then(function (userAnswer) {
+            connection.query("SELECT * FROM products", function (err, res) {
+
+                var chosenItem;
+
+                // Loop through products that needs to be updated
+                for (var i = 0; i < res.length; i++) {
+                    if (res[i].item_id === parseInt(userAnswer.item_id)) {
+                        chosenItem = res[i];
+                    }
+                }
+
+                // Add new stock to existing stock
+                var updatedStock = parseInt(chosenItem.stock_quantity) + parseInt(userAnswer.stock);
+
+                console.log("Updated stock: " + updatedStock);
+
+                // Update stock for selected product in database
+                connection.query("UPDATE products SET ? WHERE ?", [{
+                    stock_quantity: updatedStock
+                }, {
+                    item_id: userAnswer.item_id
+                }], function (err) {
+                    if (err) {
+                        throw err;
+                    } else {
+                        // Select new action from menu
+                        managerMenu();
+                    }
+                });
+            });
+        });
+};
