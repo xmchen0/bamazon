@@ -119,7 +119,7 @@ function managerMenu() {
                 case 'View Products For Sale':
                     viewProducts();
                     break;
-                case 'View Low Inventory <= 5':
+                case 'View Low Inventory':
                     viewInventory();
                     break;
                 case 'Add To Inventory':
@@ -151,7 +151,17 @@ function viewInventory() {
         if (err) throw err;
 
         // Display inventory table
-        console.table(res);
+        // console.table(res);
+
+        var listTable = new Table({
+            head: ['Item ID', 'Product Name', 'Department', 'Price', 'Qty'],
+            colWidths: [10, 20, 15, 10, 10]
+        });
+        for (var i = 0; i < res.length; i++) {
+            listTable.push([res[i].item_id, res[i].product_name, `${res[i].department_name}`, `${res[i].price}`, `${res[i].stock_quantity}`]);
+        }
+
+        console.log(`\n\n${listTable.toString()}\n\n`);
 
         // If no data to display, console.log("Nothing to display")
 
