@@ -152,8 +152,7 @@ function addInventory() {
             name: "item_id",
             type: "input",
             message: "Enter item id that you would like to add more stock to:"
-        },
-        {
+        }, {
             name: "stock",
             type: "input",
             message: "Number of stock to add:"
@@ -181,14 +180,76 @@ function addInventory() {
                     stock_quantity: updatedStock
                 }, {
                     item_id: userAnswer.item_id
-                }], function (err) {
+                }],
+                    function (err) {
+                        if (err) {
+                            throw err;
+                        } else {
+                            // Select new action from menu
+                            managerMenu();
+                        }
+                    });
+            });
+        });
+};
+
+// Add a completely new product to the store
+function addNewProduct() {
+    inquirer.prompt([
+        {
+            name: "product_name",
+            type: "input",
+            message: "What is the product you would like to add?"
+        }, {
+            name: "department_name",
+            type: "input",
+            message: "Department: "
+        }, {
+            name: "price",
+            type: "input",
+            message: "Price: "
+        }, {
+            name: "stock_quantity",
+            type: "input",
+            message: "Quantity: "
+        }
+    ])
+        .then(function (userAnswer) {
+            connection.query("INSERT INTO products SET ?", {
+                product_name: userAnswer.product_name,
+                department_name: userAnswer.department_name,
+                price: userAnswer.price,
+                stock_quantity: userAnswer.stock_quantity
+            },
+                function (err, res) {
                     if (err) {
                         throw err;
                     } else {
-                        // Select new action from menu
-                        managerMenu();
+                        console.log("Your product was added successfully!");
+                        // Initiate
+                        viewAgain();
                     }
                 });
-            });
+        });
+};
+
+// View Inventory Again
+function viewAgain() {
+    inquirer
+        .prompt([
+            {
+                name: "userInput",
+                type: "confirm",
+                message: "Update inventory again?",
+            }
+        ])
+        .then(function (response) {
+            if (response.userInput) {
+                runSearch();
+            } else {
+                console.log("Goodbye!");
+                console.log(" ");
+                process.exit();
+            }
         });
 };
