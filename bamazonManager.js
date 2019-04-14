@@ -35,6 +35,7 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const chalk = require("chalk");
+const Table = require("cli-table");
 
 /* ---------------- *\
 |* MYSQL CONNECTION *|
@@ -68,10 +69,9 @@ connection.connect(function (err) {
 function greeting() {
     console.log(" ");
     console.log(" ");
-    console.log(chalk.bgMagenta.white.bold("                         I N V E N T O R Y   M A N A G E M E N T                    "));
+    console.log(chalk.green.bold("                I N V E N T O R Y   M A N A G E M E N T                "));
     console.log(" ");
-    console.log(chalk.magenta("                               Kathy's Boutique Shop                         "));
-    console.log(" ");
+    console.log(chalk.yellow("                         Kathy's Boutique Shop                  "));
     // Initiate
     runSearch();
 };
@@ -82,8 +82,18 @@ function runSearch() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
         // Display catalog
-        console.table(res);
-        console.log(" ");
+        // console.table(res);
+
+        var listTable = new Table({
+            head: ['Item ID', 'Product Name', 'Department', 'Price', 'Qty'],
+            colWidths: [10, 20, 15, 10, 10]
+        });
+        for (var i = 0; i < res.length; i++) {
+            listTable.push([res[i].item_id, res[i].product_name, `${res[i].department_name}`, `${res[i].price}`, `${res[i].stock_quantity}`]);
+        }
+
+        console.log(`\n\n${listTable.toString()}\n\n`);
+
         // Initiate
         managerMenu(res);
     });
@@ -109,7 +119,7 @@ function managerMenu() {
                 case 'View Products For Sale':
                     viewProducts();
                     break;
-                case 'View Low Inventory':
+                case 'View Low Inventory <= 5':
                     viewInventory();
                     break;
                 case 'Add To Inventory':
@@ -137,14 +147,14 @@ function viewProducts() {
 
 // List all items with an inventory count lower than five (5)
 function viewInventory() {
-    connection.query("SELECT * FROM products WHERE stock_quantity < 5", function (err, res) {
+    connection.query("SELECT * FROM products WHERE stock_quantity <= 5", function (err, res) {
         if (err) throw err;
 
         // Display inventory table
         console.table(res);
 
         // If no data to display, console.log("Nothing to display")
-        
+
 
         // Select new action from menu
         managerMenu();

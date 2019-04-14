@@ -44,6 +44,7 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const chalk = require("chalk");
+const Table = require("cli-table");
 
 /* ---------------- *\
 |* MYSQL CONNECTION *|
@@ -77,10 +78,9 @@ connection.connect(function (err) {
 function greeting() {
     console.log(" ");
     console.log(" ");
-    console.log(chalk.bgMagenta.white.bold("                                    W E L C O M E                                   "));
+    console.log(chalk.green.bold("                           W E L C O M E                    "));
     console.log(" ");
-    console.log(chalk.magenta("                               Kathy's Boutique Shop                           "));
-    console.log(" ");
+    console.log(chalk.yellow("                        Kathy's Boutique Shop               "));
     // Initiate
     runSearch();
 };
@@ -91,8 +91,18 @@ function runSearch() {
     connection.query("SELECT * FROM products", function (err, res) {
         if (err) throw err;
         // Display catalog
-        console.table(res);
-        console.log(" ");
+        // console.table(res);
+
+        var listTable = new Table({
+            head: ['Item ID', 'Product Name', 'Department', 'Price', 'Qty'],
+            colWidths: [10, 20, 15, 10, 10]
+        });
+        for (var i = 0; i < res.length; i++) {
+            listTable.push([res[i].item_id, res[i].product_name, `${res[i].department_name}`, `${res[i].price}`, `${res[i].stock_quantity}`]);
+        }
+
+        console.log(`\n\n${listTable.toString()}\n\n`);
+
         // Initiate
         customerOrder(res);
     });
