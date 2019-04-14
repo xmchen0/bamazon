@@ -139,7 +139,13 @@ function viewProducts() {
 function viewInventory() {
     connection.query("SELECT * FROM products WHERE stock_quantity < 5", function (err, res) {
         if (err) throw err;
+
+        // Display inventory table
         console.table(res);
+
+        // If no data to display, console.log("Nothing to display")
+        
+
         // Select new action from menu
         managerMenu();
     })
@@ -203,15 +209,15 @@ function addNewProduct() {
         }, {
             name: "department_name",
             type: "input",
-            message: "Department: "
+            message: "Department:"
         }, {
             name: "price",
             type: "input",
-            message: "Price: "
+            message: "Price:"
         }, {
             name: "stock_quantity",
             type: "input",
-            message: "Quantity: "
+            message: "Quantity:"
         }
     ])
         .then(function (userAnswer) {
@@ -221,7 +227,7 @@ function addNewProduct() {
                 price: userAnswer.price,
                 stock_quantity: userAnswer.stock_quantity
             },
-                function (err, res) {
+                function (err) {
                     if (err) {
                         throw err;
                     } else {
