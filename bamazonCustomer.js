@@ -131,18 +131,12 @@ function customerOrder(inventory) {
                 // Display catalog
                 runSearch();
                 // Make another selection
+                console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                 console.log(" ");
-                console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                console.log("   We apologise your selection currently " + chalk.bgRed.white.bold(' Unavailable '));
+                console.log("                  Please make another selection.                ");
                 console.log(" ");
-                console.log(" ");
-                console.log(" ");
-                console.log("   We apologise your selection is currently Unavailable.   ");
-                console.log("              Please make another selection.               ");
-                console.log(" ");
-                console.log(" ");
-                console.log(" ");
-                console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                console.log(" ");
+                console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             }
             // Otherwise if product is there
             else {
@@ -183,18 +177,12 @@ function quantityChoice(product) {
                 // Display catalog
                 runSearch();
                 // Make another selection
-                console.log(" ");
                 console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                 console.log(" ");
-                console.log(" ");
-                console.log(" ");
-                console.log("   We apologise your selection currently Exceeds Stock Limit.   ");
+                console.log("   We apologise your selection currently " + chalk.bgRed.white.bold(' Exceeds Stock Limit '));
                 console.log("                  Please make another selection.                ");
                 console.log(" ");
-                console.log(" ");
-                console.log(" ");
                 console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-                console.log(" ");
             }
             // Otherwise if quantity is less than or equal value to stock inventory
             else {
@@ -219,10 +207,9 @@ function customerReceipt(product, quantity) {
             console.log(" ");
             console.log("Purchase summary: ");
             console.log(" ");
-            console.log("     " + quantity + " x " + product.product_name);
+            console.log("     " + chalk.magenta(quantity) + " x " + chalk.yellow(product.product_name));
             console.log(" ");
-            console.log(" ");
-            console.log("TOTAL DUE: CAD $" + product.price * quantity);
+            console.log("TOTAL DUE: CAD$ " + chalk.blue.bold(product.price * quantity));
             console.log(" ");
             console.log("                                                Served by: Kathy   ");
             console.log(" ");
