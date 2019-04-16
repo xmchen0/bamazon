@@ -1,7 +1,7 @@
 # bamazon
 Build an Amazon-like store with MySQL and Node.js. 
 * The app will take in orders from customers and deplete stock from the store's inventory `bamazonCustomer.js`
-* The app can track product sales across store's departments `bamazonManager.js`
+* The app can track product sales across store's departments and  `bamazonManager.js`
 
 ## Preview
 
@@ -14,7 +14,7 @@ Build an Amazon-like store with MySQL and Node.js.
 <a href="http://recordit.co/atGJYtz2EP.gif"><img src="https://media.giphy.com/media/gi93ZeAhUC5O8azV6y/giphy.gif" border="0"></a>
 
 
-## Full Demo  ⬇️
+## Full Demo on Youtube  ⬇️
 
 ### bamazonCustomer.js
 https://youtu.be/OdQXpKfSzzA
@@ -22,7 +22,7 @@ https://youtu.be/OdQXpKfSzzA
 * Length: 0:51
 * No audio
 
-### bamazonManger.js
+### bamazonManager.js
 https://youtu.be/80f-NdNUz2U
 
 * Length: 1:00
